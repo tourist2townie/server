@@ -52,8 +52,8 @@ Route::get('/getPackages/{id}/{place}','Api\AuthController@getPackages');
 
 //admins
 Route::get('/getAllTourists','Api\AuthController@getAllTourists');
-
-
+Route::get('/getAllPackages','Api\AuthController@getAllPackages');
+Route::post('/postPackages','Api\AuthController@postPackages');
 ?>
 
 

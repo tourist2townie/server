@@ -253,4 +253,21 @@ class AuthController extends Controller
         return response()->json($user);
     }
 
+    public function getAllPackages(){
+        $packages = packages::all();
+        return response()->json($packages);
+    }
+
+    public function postPackages(Request $request){
+        $postPackages = new packages();
+        $postPackages->category = $request->input('category');
+        $postPackages->guide_id = $request->input('guide_id');
+        $postPackages->tourist_id = $request->input('tourist_id');
+        $postPackages->date = $request->input('date');
+        $postPackages->days = $request->input('days');
+        $postPackages->province = $request->input('province');
+        $postPackages->save();
+        return response()->json($postPackages);
+    }
+
 }
