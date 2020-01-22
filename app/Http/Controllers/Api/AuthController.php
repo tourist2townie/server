@@ -270,4 +270,9 @@ class AuthController extends Controller
         return response()->json($postPackages);
     }
 
+    public function getPackagesForGuide($id){
+        $packages = packages::where('guide_id', '=', $id)->get();
+        return response()->json($packages);
+    }
+
 }
