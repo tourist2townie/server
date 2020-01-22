@@ -55,7 +55,7 @@ Route::get('/getAllTourists','Api\AuthController@getAllTourists');
 Route::get('/getAllPackages','Api\AuthController@getAllPackages');
 Route::post('/postPackages','Api\AuthController@postPackages');
 Route::get('/getPackagesForGuide/{id}','Api\AuthController@getPackagesForGuide');
-Route::post('https://sandbox.payhere.lk/merchant/v1/oauth/token',"Api\AuthController@getPackagesForGuide" );
+Route::post('/PaymetAuthToken',"Api\AuthController@PaymetAuthToken" );
 ?>
 
 

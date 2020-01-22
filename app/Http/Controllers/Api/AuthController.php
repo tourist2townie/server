@@ -276,6 +276,13 @@ class AuthController extends Controller
     }
 
     public function PaymetAuthToken(){
+        $client = new \GuzzleHttp\Client();
+        $headers = ['Authorization' => 'Basic NE9WeDM4QVI5YkU0RTB2VmQyWk9oNzNENzo4TEtZNFBBWGVzdzRhRkpGeXgzak0yNGFDU3I4YnEwNXk0dVhHWm0wSDduMyA='];
+        $url = "https://sandbox.payhere.lk/merchant/v1/oauth/token";
+        $body['grant_type'] = "client_credentials";
+        $request = $client->post($url,['headers'=>$headers,'body'=>json_encode($body)]);
+
+
 
     }
 
