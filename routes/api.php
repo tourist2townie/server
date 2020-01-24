@@ -17,6 +17,7 @@ Route::middleware('auth:api')->get('/user', function (Request $request) {
     return $request->user();
 });
 
+//tourist apis
 Route::post('/register','Api\AuthController@register');
 Route::post('/login','Api\AuthController@login');
 Route::get('/profileRetrieve/{id}','Api\AuthController@profileRetrieve');
@@ -35,7 +36,7 @@ Route::put('/tripStatusUpdate/{id}','Api\AuthController@tripStatusUpdate');
 Route::get('/retrieveOngoingTrip','Api\AuthController@retrieveOngoingTrip');
 Route::put('/guideRating/{id}','Api\AuthController@guideRating');
 Route::post('/updateAvatar','Api\AuthController@update');
-// Route::post('/updateAvatar','Api\UserAvatarController@update’ );
+Route::post('/reportGuide', 'Api\AuthController@reportGuide');
 
 
 //Guides apis

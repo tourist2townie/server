@@ -8,6 +8,7 @@ use App\tours;
 use App\User;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
+use App\inquiries;
 use App\places;
 use App\timelines;
 use App\packages;
@@ -281,9 +282,16 @@ class AuthController extends Controller
         $url = "https://sandbox.payhere.lk/merchant/v1/oauth/token";
         $body['grant_type'] = "client_credentials";
         $request = $client->post($url,['headers'=>$headers,'body'=>json_encode($body)]);
+    }
 
-
-
+    public function reportGuide(Request $request){
+        $inquiries = new inquiries();
+        $inquiries->guide_id = $request->input('guide_id');
+        $inquiries->tourist_id = $request->input('tourist_id');
+        $inquiries->reason = $request->input('reason');
+        $inquiries->description = $request->input('description');
+        $inquiries->save();
+        return response()->json($inquiries);
     }
 
 }
