@@ -18,7 +18,7 @@ class CreateInquiriesTable extends Migration
             $table->integer('guide_id')->unsigned();
             $table->integer('tourist_id')->unsigned();
             $table->string('reason');
-            $table->string('description');
+            $table->string('description')->nullable();
             $table->foreign('tourist_id')->references('id')->on('users');
             $table->foreign('guide_id')->references('id')->on('users');
             $table->timestamps();

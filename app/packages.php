@@ -11,6 +11,6 @@ class packages extends Model
     use Notifiable, HasApiTokens;
 
     protected $fillable = [
-        'province', 'guide_id', 'tourist_id', 'date', 'days', 'category'
+        'province', 'guide_id', 'tourist_id', 'date', 'days', 'category','price','status'
     ];
 }

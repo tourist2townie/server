@@ -23,6 +23,7 @@ class CreateUsersTable extends Migration
             $table->timestamps();
             $table->string('userType');
             $table->string('profile_image')->nullable();
+            $table->string ('status');
         });
     }
 

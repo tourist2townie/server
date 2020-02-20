@@ -25,6 +25,7 @@ class AuthController extends Controller
             'email' => 'email|required|unique:users',
             'password' => 'required|confirmed',
             'userType' => 'required',
+            'status'=>'required',
         ]);
 
 
@@ -35,7 +36,7 @@ class AuthController extends Controller
 
         if ($request->userType == 'guide') {
 
-            DB::table('guides')->insert(array('id' => $request->id, 'name' => $request->name, 'email' => $request->email, 'password' => $request->password));
+            DB::table('guides')->insert(array('id' => $request->id, 'name' => $request->name, 'email' => $request->email, 'password' => $request->password,));
         } elseif ($request->userType == 'tourist') {
 
             DB::table('tourists')->insert(array('id' => $request->id, 'name' => $request->name, 'email' => $request->email, 'password' => $request->password));
@@ -88,7 +89,7 @@ class AuthController extends Controller
     public function profileUpdate(Request $request, $id)
     {
         $user = User::find($id);
-        $user->name = $request->input('name');
+        // $user->password = $request->input('na');
         $user->email = $request->input('email');
         $user->profile_image = $request->input('profile_image');
         $user->save();
@@ -97,7 +98,11 @@ class AuthController extends Controller
 
     public function RetrieveGuides()
     {
-        $user = User::where('userType', '=', 'guide')->get();
+        $user = User::where(
+            [
+                ['userType', '=', 'guide'],
+                ['status','=','Accepted'],
+            ])->get();
         return response()->json($user);
     }
 
@@ -147,7 +152,7 @@ class AuthController extends Controller
         $tours->tour_type = $request->input('tour_type');
         $tours->place = $request->input('place');
         $tours->date = $request->input('date');
-        $tours->No_of_days = $request->input('No_of_days');
+        $tours->No_of_days = $request->input('Nore_of_days');
         $tours->status = $request->input('status');
 
         $tours->save();
@@ -187,7 +192,7 @@ class AuthController extends Controller
         ])->get();
         return response()->json($tours);
     }
-
+    //guide requested trips
     public function tripRequests($id)
     {
         $tours = tours::where([
@@ -267,6 +272,8 @@ class AuthController extends Controller
         $postPackages->date = $request->input('date');
         $postPackages->days = $request->input('days');
         $postPackages->province = $request->input('province');
+        $postPackages->price = $request->input('price');
+        $postPackages->status = $request->input('status');
         $postPackages->save();
         return response()->json($postPackages);
     }
@@ -294,4 +301,80 @@ class AuthController extends Controller
         return response()->json($inquiries);
     }
 
+    public function getInquiries(Request $request){
+        $inq = inquiries::get();
+        return response()->json($inq);
+    }
+
+    public function getPendingPackages(){
+        $packages = packages::where('status', '=', "pending")->get();
+        return response()->json($packages);
+    }
+
+    public function assignPackages(Request $request, $id)
+    {
+        $update = packages::find($id);
+        $update->guide_id = $request->input('guide_id',false);
+        $update->status = $request->input('status',false);
+        $update->save();
+        return response()->json($update);
+    }
+
+    public function removeuser($id){
+        $userDelete = User::find($id);
+        if($userDelete)
+            $userDelete->delete();
+        else
+            return response()->json($userDelete);
+        return response()->json($userDelete);
+    }
+
+    public function getalltripPrices(){
+        $allTrips = packages::all();
+        return response()->json($allTrips);
+    }
+
+    public function retrieveTrips($id){
+        $trips = tours::where('tourist_id', '=', $id)->get();
+        return response()->json($trips);
+    }
+
+    public function removeInquiry($id){
+        $inqDelete = inquiries::find($id);
+        if($inqDelete)
+            $inqDelete->delete();
+        else
+            return response()->json($inqDelete);
+        return response()->json($inqDelete);
+    }
+
+    public function searchTouristById($id){
+        $tourist = User::find($id);
+        return response()->json($tourist);
+
+    }
+
+
+    public function requestForPackage(Request $request,$id){
+        $getPackages = packages::find($id);
+        $getPackages->tourist_id = $request->input('tourist_id');
+        $getPackages->save();
+        return response()->json($getPackages);
+    }
+
+    public function getNewGuides(){
+        $getGuides = User::where([
+            ['userType', '=', 'guide'],
+            ['status','=','pending'],
+        ])->get();
+
+        return response()->json($getGuides);
+    }
+
+    public function guideStatusUpdate(Request $request,$id){
+        $updateGuide = User::find($id);
+        $updateGuide->status = $request->input('status');
+        $updateGuide->save();
+        return response()->json($updateGuide);
+    }
 }

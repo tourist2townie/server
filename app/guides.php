@@ -11,6 +11,6 @@ class guides extends Model
     use Notifiable,HasApiTokens;
 
     protected $fillable = [
-        'name', 'email', 'password',
+        'name', 'email', 'password','status',
     ];
 }

@@ -23,6 +23,8 @@ class CreatePackagesTable extends Migration
             $table->integer('days');
             $table->string('category');
             $table->string('province');
+            $table->string("status");
+            $table->integer('price')->nullable();
             $table->timestamps();
         });
     }

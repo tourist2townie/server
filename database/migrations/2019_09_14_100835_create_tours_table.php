@@ -26,6 +26,7 @@ class CreateToursTable extends Migration
             $table->foreign('guide_id')->references('id')->on('users');
             $table->string("guide_rating")->nullable();
             $table->string("tourist_rating")->nullable();
+            $table->string("price")->nullable();
             $table->timestamps();
         });
     }
